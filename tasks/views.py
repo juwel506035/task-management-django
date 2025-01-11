@@ -19,3 +19,6 @@ def contact(resquest):
 # tasks/views.py
 def show_task(request):
     return HttpResponse("This is the Show Task Page")
+
+def dashboard(request,id):
+    return HttpResponse("This is Dashborad")
