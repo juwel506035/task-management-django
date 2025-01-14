@@ -11,7 +11,7 @@ from django.shortcuts import HttpResponse
 # http response / json response
 
 def home(request):
-    return HttpResponse("<h1 style='color: red'>Welcome to the Task Management System</h1>")
+     return render(request, "home.html")
 
 
 def contact(resquest):
@@ -20,5 +20,7 @@ def contact(resquest):
 def show_task(request):
     return HttpResponse("This is the Show Task Page")
 
-def dashboard(request,id):
+def show_specific_task(request,id):
+    print('id', id)
+    print('id type', type(id))
     return HttpResponse("This is Dashborad")
