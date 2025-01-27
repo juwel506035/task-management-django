@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from tasks.forms import TaskForm,TaskModelForm
-from tasks.models import Employee,Task
+from tasks.models import Employee,Task,TaskDetail,Project
+from datetime import date
+from django.db.models import Q,Count,Max,Min,Avg
+
 
 # views ar vitor amra logical kaj kore thaki
 
@@ -64,11 +67,49 @@ def create_task(request):
     return render(request, "task_form.html", context)  # Pass 'form' in the context
 
 # retrive data 
+# def view_task(request):
+#      # retrive all data from Task model
+#      tasks =Task.objects.all()
+#      # retrive spacic data from task model
+#      task_3 = Task.objects.get(pk=1)
+#      # fetch first task model
+#      first_task = Task.objects.first()
+#      return render(request, 'show_task.html',{'tasks': tasks, 'task3':task_3, 'first_task':first_task})
+
+# filter using jkhn multi data dekhte caibo
+# def view_task(request):
+#      # tasks = Task.objects.filter(status='PENDING')
+#      # show the task which due date is today
+#      # tasks =Task.objects.filter(due_date=date.today())
+#      '''show the task whose priority is not Low'''
+#      # tasks = TaskDetail.objects.exclude(priority='L')
+#      # return render(request, 'show_task.html',{'tasks':tasks})
+
+
+# using filter ar lookups:
+# def view_task(request):
+      
+#      '''show the task that contain word "paper"'''
+#      # tasks =Task.objects.filter(title__icontains ="c",status='PENDING')
+#      '''show the task which are pending and in progress'''
+#      tasks =Task.objects.filter(Q(status='PENDING')| Q(status='IN_PROGRESS'))
+#      return render(request, 'show_task.html',{"tasks": tasks})
+
+# select_related (foreignkey, oneTonneField)
+# def view_task(request):
+     # tasks=Task.objects.select_related('details').all()
+     # tasks=TaskDetail.objects.select_related('task').all()
+     # tasks=Task.objects.select_related('project').all()
+
+     # '''prefetch_related(foreignkey many to many relation)'''
+     # tasks = Project.objects.prefetch_related('task_set').all()
+     # many to many
+     # tasks =Task.objects.prefetch_related('assigned_to').all()
+     # print(tasks)
+     # return render(request, 'show_task.html',{"tasks": tasks})
+
 def view_task(request):
-     # retrive all data from Task model
-     tasks =Task.objects.all()
-     # retrive spacic data from task model
-     task_3 = Task.objects.get(pk=1)
-     # fetch first task model
-     first_task = Task.objects.first()
-     return render(request, 'show_task.html',{'tasks': tasks, 'task3':task_3, 'first_task':first_task})
+    projects = Project.objects.annotate(
+     num_task =Count('task')
+    ).order_by('num_task')
+    return render(request,'show_task.html',{"projects":projects})

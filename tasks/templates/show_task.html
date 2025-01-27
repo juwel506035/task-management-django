@@ -6,7 +6,8 @@
     <title>Document</title>
 </head>
 <body>
-    <div>
+    {% comment %} retrive data from task model {% endcomment %}
+    {% comment %} <div>
         <ul>
             {% for task in tasks  %}
             <li>{{task.status}}</li>
@@ -19,6 +20,100 @@
     </div>
     <div>
         {{first_task}}
+    </div> {% endcomment %}
+
+    {% comment %} filter using {% endcomment %}
+
+    {% comment %} <div>
+        <ul>
+            {% for task in tasks %}
+            <li>
+                <p>{{task.task}}</p>
+                <span>{{task.priority}}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div> {% endcomment %}
+
+
+
+    {% comment %} using lookups {% endcomment %}
+    {% comment %} <div>
+        <ul>
+            {% for task in tasks %}
+            <li>
+                <p>{{task.title}}</p>
+                <span>{{task.status}}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div> {% endcomment %}
+
+    {% comment %} using related data  {% endcomment %}
+
+    {% comment %} <div>
+        <ul>
+            {% for task in tasks %}
+            <li>
+                {% comment %} one to one relation {% endcomment %}
+                {% comment %} <p>{{task.title}}</p>
+                <p>{{task.task.title}}</p>
+                {% comment %} <span>{{task.details.priority}}</span> {% endcomment %}
+                {% comment %} <span>{{task.priority}}</span> {% endcomment %} 
+                 
+                {% comment %} foreign relation {% endcomment %}
+
+                {% comment %} <p>{{task.title}}</p>
+                <span>{{task.project.name}}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div> {% endcomment %}  
+
+    {% comment %} prefetch_related {% endcomment %}
+
+{% comment %} foreign key {% endcomment %}
+    {% comment %} <div>
+        <ul>
+            {% for project in tasks %}
+                <li>
+                    <p>{{project.name}}</p>
+                    {% for task in project.task_set.all  %}
+                        <p>{{task.title}}</p>
+                    {% endfor %}
+                </li>
+                
+            {% endfor %}
+        </ul>
+    </div> {% endcomment %}
+    {% comment %} many to manay {% endcomment %}
+      {% comment %} <div>
+        <ol>
+            {% for task in tasks %}
+                <li>
+                    <p>{{task.title}}</p>
+                    {% for emp in task.assigned_to.all  %}
+                        <p>{{emp.name}}</p>
+                    {% endfor %}
+                </li>
+                
+            {% endfor %}
+        </ol>
+    </div>  {% endcomment %}
+
+    {% comment %} aggregation method {% endcomment %}
+
+    <div>
+        <ol>
+            {% for project in projects %}
+                <li>
+                    <p>{{project.name}}</p>
+                    <p>{{project.num_task}}</p>
+                     
+                </li>
+                
+            {% endfor %}
+        </ol>
     </div>
 </body>
 </html>
