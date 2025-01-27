@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Task</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body>
+   <div class="w-1/2 mx-auto mt-8 py-8">
+    <div>
+        {% if message %}
+        <p>{{ message }}</p>
+        {% endif %}
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="bg-blue-500 px-6 py-4 text-white mt-2 rounded-lg hover:bg-blue-600">
+            Submit
+        </button>
+    </form>
+   </div>
+</body>
+</html>

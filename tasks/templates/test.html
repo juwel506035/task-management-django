@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+</head>
+<body>
+
+    {% comment %} for loop and if else {% endcomment %}
+    {% for name in names %}
+    {% if name != 'jim' %}
+    <p>{{ name }}</p>
+    {% endif %}
+ {% endfor %}
+ 
+     
+    <p class='bg-lal'>This is test section</p>
+    <img class='logo' src="{% static "images/rana.jpg" %}" alt="">
+</body>
+</html>
