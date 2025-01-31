@@ -1,5 +1,5 @@
 from django import forms
-from tasks.models import Task
+from tasks.models import Task,TaskDetail
 # django Form
 class TaskForm(forms.Form):
     title = forms.CharField(max_length=250)
@@ -92,6 +92,17 @@ class TaskModelForm( StyleFormMixin,forms.ModelForm):
         #     )
         # }
     '''Mixin using'''
+    def __init__(self, *args,**kwarg):
+        super().__init__(*args, **kwarg)
+        self.apply_style_widgets()
+
+# taskdetails modele
+
+class TaskDetailModelForm(StyleFormMixin,forms.ModelForm):
+    class Meta:
+       model =TaskDetail
+       fields =['priority','notes']
+
     def __init__(self, *args,**kwarg):
         super().__init__(*args, **kwarg)
         self.apply_style_widgets()
